@@ -1,22 +1,38 @@
 Resources:
-    AppVpc:
-      Type: AWS::EC2::VPC
-      Properties:
-        CidrBlock: 10.0.0.0/16
-        EnableDnsSupport: true
-        EnableDnsHostnames: true
-        Tags:
-        - Key: Name
-          Value: dev
-    PublicSubnetA:
-      Type: AWS::EC2::Subnet
-      Properties:
-          VpcId: !Ref AppVpc
-          CidrBlock: 10.0.1.0/24
-          MapPublicIpOnLaunch: true
-    PublicSubnetB:
-      Type: AWS::EC2::Subnet
-      Properties:
-          VpcId: !Ref AppVpc
-          CidrBlock: 10.0.1.0/24
-          MapPublicIpOnLaunch: true
+  AppVpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+      - Key: Name
+        Value: dev
+  PublicSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+        VpcId: !Ref AppVpc
+        CidrBlock: 10.0.1.0/24
+        MapPublicIpOnLaunch: true
+  PublicSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties:
+        VpcId: !Ref AppVpc
+        CidrBlock: 10.0.1.0/24
+        MapPublicIpOnLaunch: true
+
+
+  EC2VPC:
+    Type: AWS::EC2::VPC
+    DeletionPolicy: Retain
+    Properties:
+      InstanceTenancy: default
+      CidrBlock: 172.31.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Value: default
+          Key: Name
+    Metadata:
+      PrimaryIdentifier: vpc-0740ae936ec1ed8c1
+      ManagedByStack: "false"
