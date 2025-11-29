@@ -127,6 +127,31 @@ Resources:
 
 AWS Toolkitを使用して、既存のリソースからCloudFormationテンプレートを生成することもできます。
 
+まずは`template3.yml`というファイルを作成して開いたままにします。
+
+次にAWS Toolkitを開き、`CloudFormation`セクションに移動して`+`をクリックします。
+
+![cfn3](images/cfn3.png)
+
+リソースタイプを入力するように求められるので、`AWS::S3::Bucket`と入力します。
+
+![cfn4](images/cfn4.png)
+
+チェックボックスにチェックを入れて、`OK`をクリックします。
+
+![cfn5](images/cfn5.png)
+
+すると、ResourcesセクションにS3バケットにアクセスする項目が生成されるの展開します。
+
+![cfn6](images/cfn6.png)
+
+筆者の環境ではS3バケットが複数あるため、S3バケット一覧が表示されます。表示内容は環境のよって異なります。
+ここで`+`をクリックすると、選択したS3バケットのCloudFormationテンプレートが`template3.yml`に生成されます。
+
+![cfn7](images/cfn7.png)
+
+これにより、既存のインフラストラクチャをコードとして管理することが容易になります。
+
 ## まとめ
 
 ## 参考
