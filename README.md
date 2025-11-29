@@ -53,6 +53,105 @@ Terraformの状態管理の煩雑さや、CDKのバージョンアップに伴�
 
 ## ハンズオン
 
+早速試してみます。今回はいくつかのシナリオを試してみます。
+
+- パブリックサブネットを持つVPCのCloudFormationテンプレート作成
+- サブネットを重複させてみる
+- 既存のリソースからテンプレートを生成してみる
+
+### パブリックサブネットを持つVPCのCloudFormationテンプレート作成
+
+以下のようなCloudFormationテンプレートを`template.yml`として作成します。
+
+```yaml
+Resources:
+  AppVpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+      - Key: Name
+        Value: dev
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AppVpc
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+```
+
+すると以下のように、`Resources`で破線が表示されます。
+
+![cfn1](images/cfn1.png)
+
+これはAppVpcのサブネットがパブリックとして設定されていることを警告しており、AWSのセキュリティの柱となるルールに基づき、セキュリティとコンプライアンスをチェックしています。
+
+また、`VpcId`の`!Ref`を使用した際、利用できるリソースの候補が表示されます。（template.ymlを修正して実際にやってみましょう）
+
+### サブネットを重複させてみる
+
+次に、同じCIDRブロックを持つサブネットを追加してみます。`PublicSubnetA`と`PublicSubnetB`を作成し、同じCIDRブロックを指定します。
+
+```yaml
+Resources:
+  AppVpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+      - Key: Name
+        Value: dev
+  PublicSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AppVpc
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+  PublicSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AppVpc
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+```
+
+すると以下のように、CIDRブロックの重複に関する警告が表示されます。`MapPublicIpOnLaunch`の警告も引き続き表示されています。
+
+![cfn2](images/cfn2.png)
+
+### 既存のリソースからテンプレートを生成してみる
+
+AWS Toolkitを使用して、既存のリソースからCloudFormationテンプレートを生成することもできます。
+
+まずは`template3.yml`というファイルを作成して開いたままにします。
+
+次にAWS Toolkitを開き、`CloudFormation`セクションに移動して`+`をクリックします。
+
+![cfn3](images/cfn3.png)
+
+リソースタイプを入力するように求められるので、`AWS::S3::Bucket`と入力します。
+
+![cfn4](images/cfn4.png)
+
+チェックボックスにチェックを入れて、`OK`をクリックします。
+
+![cfn5](images/cfn5.png)
+
+すると、ResourcesセクションにS3バケットにアクセスする項目が生成されるの展開します。
+
+![cfn6](images/cfn6.png)
+
+筆者の環境ではS3バケットが複数あるため、S3バケット一覧が表示されます。表示内容は環境のよって異なります。
+ここで`+`をクリックすると、選択したS3バケットのCloudFormationテンプレートが`template3.yml`に生成されます。
+
+![cfn7](images/cfn7.png)
+
+これにより、既存のインフラストラクチャをコードとして管理することが容易になります。
+
 ## まとめ
 
 ## 参考
