@@ -17,6 +17,12 @@
 
 ## まとめ
 
+## 参考
+
+- [Announcing CloudFormation IDE Experience: End-to-End Development in Your IDE](https://aws.amazon.com/jp/blogs/devops/announcing-cloudformation-ide-experience-end-to-end-development-in-your-ide/)
+- [Accelerate infrastructure development with AWS CloudFormation intelligent authoring in IDEs](https://aws.amazon.com/jp/about-aws/whats-new/2025/11/aws-cloudformation-intelligent-authoring-ides/)
+- [AWS CloudFormation language server](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/ide-extension.html)
+
 ## AWS CLI インストールと SSO ログイン手順 (Linux環境)
 
 このガイドでは、Linux環境でAWS CLIをインストールし、AWS SSOを使用してログインするまでの手順を説明します。
