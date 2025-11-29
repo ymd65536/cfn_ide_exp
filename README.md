@@ -57,7 +57,7 @@ Terraformの状態管理の煩雑さや、CDKのバージョンアップに伴�
 
 - パブリックサブネットを持つVPCのCloudFormationテンプレート作成
 - サブネットを重複させてみる
-- 既存のテンプレートを検証してみる
+- 既存のリソースからテンプレートを生成してみる
 
 ### パブリックサブネットを持つVPCのCloudFormationテンプレート作成
 
@@ -65,21 +65,21 @@ Terraformの状態管理の煩雑さや、CDKのバージョンアップに伴�
 
 ```yaml
 Resources:
-    AppVpc:
-      Type: AWS::EC2::VPC
-      Properties:
-        CidrBlock: 10.0.0.0/16
-        EnableDnsSupport: true
-        EnableDnsHostnames: true
-        Tags:
-        - Key: Name
-          Value: dev
-    PublicSubnet:
-      Type: AWS::EC2::Subnet
-      Properties:
-          VpcId: !Ref AppVpc
-          CidrBlock: 10.0.1.0/24
-          MapPublicIpOnLaunch: true
+  AppVpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+      - Key: Name
+        Value: dev
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AppVpc
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
 ```
 
 すると以下のように、`Resources`で破線が表示されます。
@@ -96,32 +96,36 @@ Resources:
 
 ```yaml
 Resources:
-    AppVpc:
-      Type: AWS::EC2::VPC
-      Properties:
-        CidrBlock: 10.0.0.0/16
-        EnableDnsSupport: true
-        EnableDnsHostnames: true
-        Tags:
-        - Key: Name
-          Value: dev
-    PublicSubnetA:
-      Type: AWS::EC2::Subnet
-      Properties:
-          VpcId: !Ref AppVpc
-          CidrBlock: 10.0.1.0/24
-          MapPublicIpOnLaunch: true
-    PublicSubnetB:
-      Type: AWS::EC2::Subnet
-      Properties:
-          VpcId: !Ref AppVpc
-          CidrBlock: 10.0.1.0/24
-          MapPublicIpOnLaunch: true
+  AppVpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+      - Key: Name
+        Value: dev
+  PublicSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AppVpc
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+  PublicSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref AppVpc
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
 ```
 
 すると以下のように、CIDRブロックの重複に関する警告が表示されます。`MapPublicIpOnLaunch`の警告も引き続き表示されています。
 
 ![cfn2](images/cfn2.png)
+
+### 既存のリソースからテンプレートを生成してみる
+
+AWS Toolkitを使用して、既存のリソースからCloudFormationテンプレートを生成することもできます。
 
 ## まとめ
 
