@@ -11,7 +11,45 @@
 
 ## 今のCDKじゃねぇ、CloudFormationだ
 
+AWS CDKやTerraformなどのIaCツールが普及してきていますが、やはりCloudFormationを直接使いたいというニーズも根強くあります。
+例えば以下のようなケースです。
+
+- 既存のCloudFormationテンプレートを活用したい
+- IaCツールを導入するほどではないが、CloudFormationでインフラを管理したい
+- IaCツールの学習コストを避けたい
+
+あるいはIaC個々の辛みを避けるために、CloudFormationを選択する場合もあります。
+Terraformの状態管理の煩雑さや、CDKのバージョンアップに伴う互換性問題などが挙げられます。
+
+と言ってもCloudFormationにも落とし穴があります。
+例えば以下のような問題です。
+
+- テンプレートの記述ミスや構文エラーの検出が難しい
+- リソース間の依存関係の把握が困難
+- 大規模なテンプレートの管理が複雑
+- json/yamlの記述が煩雑でミスが発生しやすい
+
+筆者はyamlで書くことが多く、基本的には自動生成されたものを修正して使うことが多いのですが、やはりミスが発生しやすいです。
+言語サーバー（LSP）やリンターがあったら便利だなと思っていたところに、今回のCloudFormation IDE Experienceの発表がありました。
+
+## CloudFormation IDE Experience とは
+
+簡単に説明すると、CloudFormationテンプレートの作成と管理を支援するためのIDE（統合開発環境）向けの機能セットです。これにより、開発者はCloudFormationテンプレートをより効率的に作成、編集、デバッグできるようになります。
+
+公式ブログには以下のように説明されています。
+
+> IDE内でエンドツーエンドの開発ループを構築することで、コードとしてのインフラストラクチャの構築方法を刷新します。一般的なYAMLやJSONエディタとは異なり、これはインフラストラクチャ開発者向けに特別に構築されたCloudFormationファーストのソリューションです。
+※一部抜粋して翻訳
+
+[引用：Announcing CloudFormation IDE Experience: End-to-End Development in Your IDE](https://aws.amazon.com/jp/blogs/devops/announcing-cloudformation-ide-experience-end-to-end-development-in-your-ide/)
+
+なお、この機能を利用するには、拡張機能としてAWS ToolkitをIDEにインストールする必要があります。
+
 ## セットアップ
+
+まずはAWS ToolkitをVSCodeの拡張機能としてインストールします。
+
+[AWS Toolkit - VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=AmazonWebServices.aws-toolkit-vscode)
 
 ## ハンズオン
 
