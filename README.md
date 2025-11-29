@@ -86,6 +86,39 @@ Resources:
 
 また、`VpcId`の`!Ref`を使用した際、利用できるリソースの候補が表示されます。（template.ymlを修正して実際にやってみましょう）
 
+### サブネットを重複させてみる
+
+次に、同じCIDRブロックを持つサブネットを追加してみます。`PublicSubnetA`と`PublicSubnetB`を作成し、同じCIDRブロックを指定します。
+
+```yaml
+Resources:
+    AppVpc:
+      Type: AWS::EC2::VPC
+      Properties:
+        CidrBlock: 10.0.0.0/16
+        EnableDnsSupport: true
+        EnableDnsHostnames: true
+        Tags:
+        - Key: Name
+          Value: dev
+    PublicSubnetA:
+      Type: AWS::EC2::Subnet
+      Properties:
+          VpcId: !Ref AppVpc
+          CidrBlock: 10.0.1.0/24
+          MapPublicIpOnLaunch: true
+    PublicSubnetB:
+      Type: AWS::EC2::Subnet
+      Properties:
+          VpcId: !Ref AppVpc
+          CidrBlock: 10.0.1.0/24
+          MapPublicIpOnLaunch: true
+```
+
+すると以下のように、CIDRブロックの重複に関する警告が表示されます。`MapPublicIpOnLaunch`の警告も引き続き表示されています。
+
+![cnf2](images/cfn2.png)
+
 ## まとめ
 
 ## 参考
