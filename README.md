@@ -53,7 +53,38 @@ Terraformの状態管理の煩雑さや、CDKのバージョンアップに伴�
 
 ## ハンズオン
 
+早速試してみます。今回はVPCとパブリックサブネットを作成するCloudFormationテンプレートを作成してみます。
+
+### パブリックサブネットを持つVPCのCloudFormationテンプレート作成
+
+以下のようなCloudFormationテンプレートを`template.yml`として作成します。
+
+```yaml
+Resources:
+    AppVpc:
+      Type: AWS::EC2::VPC
+      Properties:
+        CidrBlock: 10.0.0.0/16
+        EnableDnsSupport: true
+        EnableDnsHostnames: true
+        Tags:
+        - Key: Name
+          Value: dev
+    PublicSubnet:
+      Type: AWS::EC2::Subnet
+      Properties:
+          VpcId: !Ref AppVpc
+          CidrBlock: 10.0.1.0/24
+          MapPublicIpOnLaunch: true
+```
+
+すると以下のように、`Resources`で破線が表示されます。
+
 ![cnf1](images/cfn1.png)
+
+これはAppVpcのサブネットがパブリックとして設定されていることを警告しており、AWSのセキュリティの柱となるルールに基づき、セキュリティとコンプライアンスをチェックしています。
+
+また、`VpcId`の`!Ref`を使用した際、利用できるリソースの候補が表示されます。（template.ymlを修正して実際にやってみましょう）
 
 ## まとめ
 
