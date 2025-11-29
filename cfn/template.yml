@@ -1,0 +1,16 @@
+Resources:
+    AppVpc:
+      Type: AWS::EC2::VPC
+      Properties:
+        CidrBlock: 10.0.0.0/16
+        EnableDnsSupport: true
+        EnableDnsHostnames: true
+        Tags:
+        - Key: Name
+          Value: dev
+    PublicSubnet:
+      Type: AWS::EC2::Subnet
+      Properties:
+          VpcId: !Ref AppVpc
+          CidrBlock: 10.0.1.0/24
+          MapPublicIpOnLaunch: true
