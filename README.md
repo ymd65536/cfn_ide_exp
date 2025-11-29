@@ -9,7 +9,7 @@
 
 今回はCloudFormation IDE Experienceを検証してみます。
 
-## 今のCDKじゃねぇ、CloudFormationだ
+## 今のはCDKじゃねぇ、CloudFormationだ
 
 AWS CDKやTerraformなどのIaCツールが普及してきていますが、やはりCloudFormationを直接使いたいというニーズも根強くあります。
 例えば以下のようなケースです。
