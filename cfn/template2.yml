@@ -11,12 +11,12 @@ Resources:
   PublicSubnetA:
     Type: AWS::EC2::Subnet
     Properties:
-        VpcId: !Ref AppVpc
-        CidrBlock: 10.0.1.0/24
-        MapPublicIpOnLaunch: true
+      VpcId: !Ref AppVpc
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
   PublicSubnetB:
     Type: AWS::EC2::Subnet
     Properties:
-        VpcId: !Ref AppVpc
-        CidrBlock: 10.0.1.0/24
-        MapPublicIpOnLaunch: true
+      VpcId: !Ref AppVpc
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
