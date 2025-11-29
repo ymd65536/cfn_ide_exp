@@ -121,7 +121,7 @@ Resources:
 
 すると以下のように、CIDRブロックの重複に関する警告が表示されます。`MapPublicIpOnLaunch`の警告も引き続き表示されています。
 
-![cnf2](images/cfn2.png)
+![cfn2](images/cfn2.png)
 
 ## まとめ
 
